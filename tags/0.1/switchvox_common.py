@@ -27,7 +27,7 @@ except ImportError:
 
 def switchvox_request(username, password, json_req, hostname):
     url = "https://%s/json" % hostname
-    p = subprocess.Popen(['/usr/bin/wget', '--no-check-certificate',
+    p = subprocess.Popen(['wget', '--no-check-certificate',
                         '--http-user', username,
                         '--http-password', password,
                         '--header', 'Content-Type: text/json',

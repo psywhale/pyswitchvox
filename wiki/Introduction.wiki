@@ -1,6 +1,3 @@
-#First page basic introduction
-
-
 = How to run things =
 It's really pretty simple. Run each of the programs in the bin directory, each one will print out usage directions to the terminal. Pretty simple, eh?
 

@@ -33,7 +33,7 @@ def switchvox_request(username, password, json_req, hostname):
                         '--header', 'Content-Type: text/json',
                         '--post-data', json_req, url, '-O', '-',
     #                    '--post-data', req, url, '-O', fifopath,
-                        ], stdout=PIPE, stderr=PIPE
+                        ], stdout=PIPE, stderr=PIPE,
                         universal_newlines=True) # Allows forward-compatibility with python3+
     wget_result = json.load(p.stdout)
     

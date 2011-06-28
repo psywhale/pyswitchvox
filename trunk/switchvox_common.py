@@ -17,6 +17,7 @@ Switchvox common methods
 #       MA 02110-1301, USA.
 
 import subprocess
+import urllib2
 from subprocess import PIPE
 
 try:
@@ -26,18 +27,25 @@ except ImportError:
 
 
 def switchvox_request(username, password, json_req, hostname):
-    url = "https://%s/json" % hostname
-    p = subprocess.Popen(['wget', '--no-check-certificate',
-                        '--http-user', username,
-                        '--http-password', password,
-                        '--header', 'Content-Type: text/json',
-                        '--post-data', json_req, url, '-O', '-',
-    #                    '--post-data', req, url, '-O', fifopath,
-                        ], stdout=PIPE, stderr=PIPE,
-                        universal_newlines=True) # Allows forward-compatibility with python3+
-    wget_result = json.load(p.stdout)
-    
-    return wget_result
+    url = "https://%s" % hostname
+
+    #create a password manager
+    passManager = urllib2.HTTPPasswordMgrWithDefaultRealm()
+    passManager.add_password(None, url, username, password)
+
+    #setup auth handler and opener
+    authHandler = urllib2.HTTPDigestAuthHandler(passManager)
+    urlOpener = urllib2.build_opener(authHandler)
+
+    #set http headers
+    urlOpener.add_headers={'Host:':hostname ,'Content-Type': 'text/json','Content-Length':str(len(json_req))}
+
+    #send request
+    req = urlOpener.open(url+"/json",data=json_req)
+
+    #read and return result
+    result=req.read()
+    return result
 
 def get_errors(response):
     """

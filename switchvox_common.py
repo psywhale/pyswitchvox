@@ -16,9 +16,7 @@ Switchvox common methods
 #       Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #       MA 02110-1301, USA.
 
-import subprocess
 import urllib2
-from subprocess import PIPE
 
 try:
     import json
